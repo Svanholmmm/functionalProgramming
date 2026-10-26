@@ -1,39 +1,40 @@
+package org.example;
+
 import org.w3c.dom.ls.LSOutput;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import java.time.LocalDate;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Main {
-}
+    public static void main(String[] args) {
+        LocalDate birthday = LocalDate.of(2001, 12, 29);
 
-public static void main(String[] args) {
-    Supplier<Double> ran = () -> Math.random();
 
-    Stream<Double> randomNumbers = Stream.generate(ran);
+        Stream<LocalDate> tenDates =
+                IntStream.range(1, 50)
+                        .mapToObj(i -> birthday.plusYears(i));
 
-    Function<Double, Long> dblround = d -> Math.round(d * 100);
+        var obj = tenDates.map(date -> "year=" + date.getYear() + "Ugedag= " + date.getDayOfWeek());
 
-    Predicate<Long> longEven = rannum -> rannum % 2 == 0;
+        obj.forEach(System.out::println);
 
-    DoubleSummaryStatistics stats = randomNumbers
-            .map(dblround)
-            .filter(longEven)
-            .limit(12)
-            .mapToDouble(d -> d)
-            .peek(System.out::println)
-            .summaryStatistics();
+        IntPredicate leapYear = year -> (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 
-    System.out.println("Max: " + stats.getMax());
-    System.out.println("Average: " + stats.getAverage());
+        var obj2 = IntStream.iterate(LocalDate.now().getYear(), year -> year +1).filter(leapYear).limit(4);
+        obj2.forEach(System.out::println);
+    }
 }
 
 
@@ -53,6 +54,55 @@ public static void main(String[] args) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//public static void main(String[] args) {
+//    Supplier<Double> ran = () -> Math.random();
+//
+//    Stream<Double> randomNumbers = Stream.generate(ran);
+//
+//    Function<Double, Long> dblround = d -> Math.round(d * 100);
+//
+//    Predicate<Long> longEven = rannum -> rannum % 2 == 0;
+//
+//    DoubleSummaryStatistics stats = randomNumbers
+//            .map(dblround)
+//            .filter(longEven)
+//            .limit(12)
+//            .mapToDouble(d -> d)
+//            .peek(System.out::println)
+//            .summaryStatistics();
+//
+//    System.out.println("Max: " + stats.getMax());
+//    System.out.println("Average: " + stats.getAverage());
+//}
 
 
 //
